@@ -10,6 +10,9 @@
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property NSMutableArray *textInputs;
+
 @end
 
 @implementation ViewController
@@ -18,14 +21,23 @@
     [super viewDidLoad];
 }
 - (IBAction)onAddButtonPressed:(id)sender {
+    self.textInputs = [[NSMutableArray alloc] init];
+    [self.textInputs addObject:self.textField.text];
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return self.textInputs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
+
+    cell.textLabel.text = self.textInputs[indexPath.row];
+
+    return cell;
+
+
 }
 
 @end
