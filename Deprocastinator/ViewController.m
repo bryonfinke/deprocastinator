@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property NSMutableArray *textInputs;
+@property NSMutableArray *colorInputs;
 @property (weak, nonatomic) IBOutlet UITableView *tasksTableView;
 
 @property BOOL edit;
@@ -26,9 +27,11 @@
     self.edit = NO;
     [super viewDidLoad];
     self.textInputs = [[NSMutableArray alloc] init];
+    self.colorInputs = [[NSMutableArray alloc] init];
 }
 - (IBAction)onAddButtonPressed:(id)sender {
     [self.textInputs addObject:self.textField.text];
+    [self.colorInputs addObject:[UIColor blackColor]];
     [self.tasksTableView reloadData];
     self.textField.text = @"";
     [self.view endEditing:YES];
@@ -53,14 +56,18 @@
                             [UIColor greenColor],
                             nil];
     if ([swipedCell.textLabel.textColor isEqual:colorsArray[0]]) {
-        swipedCell.textLabel.textColor = colorsArray[1];
+        self.colorInputs[swipedIndexPath.row] = colorsArray[1];
+        NSLog(@"%@", self.colorInputs);
     }
     else if ([swipedCell.textLabel.textColor isEqual:colorsArray[1]]) {
-        swipedCell.textLabel.textColor = colorsArray[2];
+        self.colorInputs[swipedIndexPath.row] = colorsArray[2];
+        NSLog(@"%@", self.colorInputs);
     }
     else {
-        swipedCell.textLabel.textColor = colorsArray[0];
+        self.colorInputs[swipedIndexPath.row] = colorsArray[0];
+        NSLog(@"%@", self.colorInputs);
     }
+    [self.tasksTableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -71,6 +78,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
     
     cell.textLabel.text = self.textInputs[indexPath.row];
+    cell.textLabel.textColor = self.colorInputs[indexPath.row];
 
     return cell;
 }
@@ -106,6 +114,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         [self.textInputs removeObjectAtIndex:self.cellToDelete];
+        [self.colorInputs removeObjectAtIndex:self.cellToDelete];
         [self.tasksTableView reloadData];
     }
 }
