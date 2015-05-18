@@ -41,6 +41,24 @@
     }
 
 }
+- (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
+    CGPoint point = [sender locationInView:self.tasksTableView];
+    NSIndexPath *swipedIndexPath = [self.tasksTableView indexPathForRowAtPoint:point];
+    UITableViewCell *swipedCell = [self.tasksTableView cellForRowAtIndexPath:swipedIndexPath];
+    NSArray *colorsArray = [NSArray arrayWithObjects:[UIColor redColor],
+                            [UIColor yellowColor],
+                            [UIColor greenColor],
+                            nil];
+    if ([swipedCell.textLabel.textColor isEqual:colorsArray[0]]) {
+        swipedCell.textLabel.textColor = colorsArray[1];
+    }
+    else if ([swipedCell.textLabel.textColor isEqual:colorsArray[1]]) {
+        swipedCell.textLabel.textColor = colorsArray[2];
+    }
+    else {
+        swipedCell.textLabel.textColor = colorsArray[0];
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.textInputs.count;
@@ -60,6 +78,13 @@
         [self.tasksTableView reloadData];
     } else {
         [tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor greenColor];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.textInputs removeObjectAtIndex:indexPath.row];
+        [self.tasksTableView reloadData];
     }
 }
 
