@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property NSMutableArray *textInputs;
+@property (weak, nonatomic) IBOutlet UITableView *tasksTableView;
 
 @end
 
@@ -19,11 +20,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.textInputs = [[NSMutableArray alloc] init];
 }
 - (IBAction)onAddButtonPressed:(id)sender {
-    self.textInputs = [[NSMutableArray alloc] init];
     [self.textInputs addObject:self.textField.text];
-
+    [self.tasksTableView reloadData];
+    self.textField.text = @"";
+    [self.view endEditing:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -36,7 +39,9 @@
     cell.textLabel.text = self.textInputs[indexPath.row];
 
     return cell;
-
+}
+- (IBAction)onTaskTapped:(UITapGestureRecognizer *)sender {
+    CGPoint point = [sender locationInView:self.view];
 
 }
 
