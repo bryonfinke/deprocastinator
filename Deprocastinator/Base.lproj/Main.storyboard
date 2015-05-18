@@ -51,12 +51,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="UCn-zw-Z5v" appends="YES" id="OSB-po-eaJ"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="XwF-1t-k3h">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="oiA-Xd-8S6"/>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="oiA-Xd-8S6">
+                            <connections>
+                                <action selector="onEditButtonPressed:" destination="BYZ-38-t0r" id="A1r-kf-CwF"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tasksTableView" destination="sGR-cO-LMI" id="4qt-wm-My7"/>
@@ -64,11 +65,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="UCn-zw-Z5v">
-                    <connections>
-                        <action selector="onTaskTapped:" destination="BYZ-38-t0r" id="9cB-WN-GUF"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="261" y="25"/>
         </scene>

@@ -14,7 +14,6 @@
 @property NSMutableArray *textInputs;
 @property (weak, nonatomic) IBOutlet UITableView *tasksTableView;
 
-@property CGPoint point;
 @end
 
 @implementation ViewController
@@ -29,6 +28,8 @@
     self.textField.text = @"";
     [self.view endEditing:YES];
 }
+- (IBAction)onEditButtonPressed:(id)sender {
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.textInputs.count;
@@ -41,10 +42,9 @@
 
     return cell;
 }
-- (IBAction)onTaskTapped:(UITapGestureRecognizer *)sender {
 
-    self.point = [sender locationInView:self.view];
-
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor greenColor];
 }
 
 @end
