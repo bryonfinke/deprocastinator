@@ -8,13 +8,15 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property NSMutableArray *textInputs;
 @property (weak, nonatomic) IBOutlet UITableView *tasksTableView;
 
 @property BOOL edit;
+
+@property NSInteger cellToDelete;
 
 @end
 
@@ -35,11 +37,12 @@
     if ([sender.title isEqualToString:@"Edit"]) {
         sender.title = @"Done";
         self.edit = YES;
+        self.tasksTableView.editing = YES;
     } else {
         sender.title = @"Edit";
         self.edit = NO;
+        self.tasksTableView.editing = NO;
     }
-
 }
 - (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
     CGPoint point = [sender locationInView:self.tasksTableView];
@@ -83,7 +86,26 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.textInputs removeObjectAtIndex:indexPath.row];
+        UIAlertView *deleteAlert = [UIAlertView new];
+        deleteAlert.title = @"Are you sure?";
+        [deleteAlert addButtonWithTitle:@"Yes"];
+        [deleteAlert addButtonWithTitle:@"Cancel"];
+        deleteAlert.delegate = self;
+        self.cellToDelete = indexPath.row;
+        [deleteAlert show];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self.textInputs removeObjectAtIndex:self.cellToDelete];
         [self.tasksTableView reloadData];
     }
 }
