@@ -14,6 +14,7 @@
 @property NSMutableArray *textInputs;
 @property (weak, nonatomic) IBOutlet UITableView *tasksTableView;
 
+@property CGPoint point;
 @end
 
 @implementation ViewController
@@ -35,13 +36,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-
+    
     cell.textLabel.text = self.textInputs[indexPath.row];
 
     return cell;
 }
 - (IBAction)onTaskTapped:(UITapGestureRecognizer *)sender {
-    CGPoint point = [sender locationInView:self.view];
+
+    self.point = [sender locationInView:self.view];
 
 }
 

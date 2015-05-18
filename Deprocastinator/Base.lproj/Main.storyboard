@@ -66,7 +66,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="UCn-zw-Z5v">
                     <connections>
-                        <action selector="onTaskTapped:" destination="BYZ-38-t0r" id="Hgh-tb-nxD"/>
+                        <action selector="onTaskTapped:" destination="BYZ-38-t0r" id="9cB-WN-GUF"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
